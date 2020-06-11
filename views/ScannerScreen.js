@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
-function HomeScreen() {
+function ScannerScreen() {
     return (
         <View>
             <View>
-                <Text>This is the home screen!</Text>
+                <Text>This is the ScannerScreen screen!</Text>
             </View>
             <View>
                 
@@ -14,5 +14,4 @@ function HomeScreen() {
         );
 }
 
-export default HomeScreen;
-
+export default ScannerScreen;

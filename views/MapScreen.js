@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
-function HomeScreen() {
+function MapScreen(props) {
+    console.log(props);
     return (
         <View>
             <View>
-                <Text>This is the home screen!</Text>
+                <Text>This is the MapScreen screen!</Text>
             </View>
             <View>
                 
@@ -14,5 +15,4 @@ function HomeScreen() {
         );
 }
 
-export default HomeScreen;
-
+export default MapScreen;
