@@ -34,7 +34,6 @@ function ListItem({ item }){
       onPress={() => onListItemHandler(item.id)}
     >
       <View style={style.listItem}>
-        {/* <Button title={title} onPress={listItemClick} /> */}
         <View style={style.listItemText}>
           <Text style={{flex:0.6, color:"#373737"}}>{item.retourantName}</Text>
           <Text style={{fontSize:10, color:"#4F4F4F"}}>{item.menuName}</Text>
