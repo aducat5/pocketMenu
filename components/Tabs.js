@@ -4,14 +4,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
-// import HomeScreen from "../views/HomeScreen.js";
 import MenuHistory from "../views/MenuHistory.js";
 import ScannerScreen from "../views/ScannerScreen.js";
 import MapScreen from "../views/MapScreen.js";
 
-// const Tab = createBottomTabNavigator();
 const Tab = createMaterialBottomTabNavigator();
-
 
 function Tabs(props) {
   return (
@@ -29,7 +26,7 @@ function Tabs(props) {
       name="History" 
       component={MenuHistory} 
       options={{
-          tabBarIcon: () => (<Ionicons name="md-funnel" size={24} color="white" />)
+          tabBarIcon: () => (<Ionicons name="ios-list" size={24} color="white" />)
       }} />
       <Tab.Screen name="Scanner" component={ScannerScreen} options={{
           tabBarIcon: () => (<Ionicons name="md-qr-scanner" size={24} color="white" />)

@@ -6,17 +6,17 @@ const lastScans = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
     retourantName: 'First Restourant',
-    menuName: "First Menu"
+    menuName: "Taksim - 5 January 2020"
   },
   {
     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
     retourantName: 'Second Restourant',
-    menuName: "Second Menu"
+    menuName: "Kadıköy - 15 November 2019"
   },
   {
     id: '58694a0f-3da1-471f-bd96-145571e29d72',
     retourantName: 'Third Restourant',
-    menuName: "Third Menu"
+    menuName: "Tuzla - 23 April 2020 "
   },
 ];
 
@@ -28,7 +28,10 @@ function ListItem({ item }){
   return (
     <View style={style.listItem}>
       {/* <Button title={title} onPress={listItemClick} /> */}
-      <Text style={style.listItemText}>{item.retourantName + ' - ' + item.menuName}</Text>
+      <View style={style.listItemText}>
+        <Text style={{flex:0.6, color:"#373737"}}>{item.retourantName}</Text>
+        <Text style={{fontSize:10, color:"#4F4F4F"}}>{item.menuName}</Text>
+      </View>
       <Ionicons name="ios-arrow-forward" size={24} color="black" style={style.listItemArrow} />
     </View>
   );
@@ -50,7 +53,7 @@ function MenuHistory() {
 
 const style = StyleSheet.create({
   container:{
-    marginTop:20
+    marginTop:25
   },
   listItem: {
     flex:1,
@@ -58,13 +61,16 @@ const style = StyleSheet.create({
     alignItems:"center",
     justifyContent:"center",
     height:60,
-    marginTop:15,
-    backgroundColor:"#E5E5E5"
+    // marginTop:15,
+    borderBottomColor:"#E5E5E5",
+    borderBottomWidth:1,
+    backgroundColor:"#EEEEEE"
   },
   listItemText: {
     flex:5,
-    color:"black",
-    marginLeft:30
+    // color:"black",
+    marginLeft:30,
+    flexDirection:"column"
   },
   listItemArrow:{
     flex:0.5,

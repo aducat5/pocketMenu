@@ -3,18 +3,18 @@ import { StyleSheet, View } from 'react-native';
 import { NavigationContainer  } from "@react-navigation/native";
 
 import Tabs from "./components/Tabs.js";
+// import FancyTabs from "./components/FancyTabs.js";
 
 function App() {
   return (
     <View style={styles.container}>
       <NavigationContainer>
         <Tabs style={styles}></Tabs>
+        {/* <FancyTabs></FancyTabs> */}
       </NavigationContainer>
     </View>
   );
 }
-
-export default App;
 
 const styles = StyleSheet.create({
   container: {
@@ -23,3 +23,5 @@ const styles = StyleSheet.create({
     // justifyContent:"space-between"
   }
 });
+
+export default App;
