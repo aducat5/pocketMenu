@@ -1,6 +1,9 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Button, FlatList, ToastAndroid } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { TouchableHighlight } from 'react-native-gesture-handler';
+
+import Menu from "./Menu.js";
 
 const lastScans = [
   {
@@ -20,24 +23,33 @@ const lastScans = [
   },
 ];
 
-var listItemClick = function(item){
-  console.log(item);
-};
+var navigation = null;
 
 function ListItem({ item }){
   return (
-    <View style={style.listItem}>
-      {/* <Button title={title} onPress={listItemClick} /> */}
-      <View style={style.listItemText}>
-        <Text style={{flex:0.6, color:"#373737"}}>{item.retourantName}</Text>
-        <Text style={{fontSize:10, color:"#4F4F4F"}}>{item.menuName}</Text>
+    <TouchableHighlight
+      activeOpacity={0.95}
+      underlayColor="#FF5733"
+      onPress={() => onListItemHandler(item.id)}
+    >
+      <View style={style.listItem}>
+        {/* <Button title={title} onPress={listItemClick} /> */}
+        <View style={style.listItemText}>
+          <Text style={{flex:0.6, color:"#373737"}}>{item.retourantName}</Text>
+          <Text style={{fontSize:10, color:"#4F4F4F"}}>{item.menuName}</Text>
+        </View>
+        <Ionicons name="ios-arrow-forward" size={24} color="#FF5733" style={style.listItemArrow} />
       </View>
-      <Ionicons name="ios-arrow-forward" size={24} color="black" style={style.listItemArrow} />
-    </View>
+    </TouchableHighlight>
   );
 }
 
-function MenuHistory() {
+function onListItemHandler(menuId){
+  navigation.navigate("Menu");
+}
+
+function MenuHistory(props) {
+  navigation = props.navigation;
   return (
     <View style={style.container}>
       <SafeAreaView>
@@ -61,20 +73,17 @@ const style = StyleSheet.create({
     alignItems:"center",
     justifyContent:"center",
     height:60,
-    // marginTop:15,
     borderBottomColor:"#E5E5E5",
     borderBottomWidth:1,
     backgroundColor:"#EEEEEE"
   },
   listItemText: {
-    flex:5,
-    // color:"black",
+    flex:4.5,
     marginLeft:30,
     flexDirection:"column"
   },
   listItemArrow:{
     flex:0.5,
-    // alignSelf:"flex-end"
   }
 });
   
