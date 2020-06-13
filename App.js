@@ -15,14 +15,6 @@ function App() {
       <NavigationContainer>
         <Tabs style={styles}></Tabs>      
       </NavigationContainer>
-      {/* <NavigationContainer>
-      <Stack.Navigator>
-          <Stack.Screen
-            name="Menu"
-            component={Menu}
-          />
-        </Stack.Navigator>  
-      </NavigationContainer> */}
     </View>
   );
 }

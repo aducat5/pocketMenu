@@ -2,6 +2,7 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Button, FlatList, ToastAndroid } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableHighlight } from 'react-native-gesture-handler';
+import Constants from "expo-constants";
 
 import Menu from "./Menu.js";
 
@@ -45,13 +46,16 @@ function ListItem({ item }){
 }
 
 function onListItemHandler(menuId){
-  navigation.navigate("Menu");
+  navigation.navigate("Menu", {menuId : menuId});
 }
 
 function MenuHistory(props) {
   navigation = props.navigation;
   return (
     <View style={style.container}>
+      <View style={{borderBottomWidth: 2, borderBottomColor: "#FF5733"}}>
+        <Text style={{fontSize: 20, marginLeft:20, marginBottom:10}}>Last Scanned Menus</Text>
+      </View>
       <SafeAreaView>
         <FlatList
         data={lastScans}
@@ -65,7 +69,7 @@ function MenuHistory(props) {
 
 const style = StyleSheet.create({
   container:{
-    marginTop:25
+      marginTop: Constants.statusBarHeight + 10,
   },
   listItem: {
     flex:1,
