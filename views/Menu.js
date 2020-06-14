@@ -19,21 +19,21 @@ function Menu(props) {
             productName: "Pizza",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "urlToImage",
+            imageUrl: "https://reactjs.org/logo-og.png",
             detailVisible: false
           },
           {
             productName: "Burger",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "urlToImage",
+            imageUrl: "../assets/products/steak.jpg",
             detailVisible: false
           },
           {
             productName: "Risotto",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "urlToImage",
+            imageUrl: "../assets/products/steak.jpg",
             detailVisible: false
           },
         ]
@@ -45,14 +45,14 @@ function Menu(props) {
             productName: "Cheese Cake",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "urlToImage",
+            imageUrl: "../assets/products/tart.jpg",
             detailVisible: false
           },
           {
             productName: "Ice Cream",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "urlToImage",
+            imageUrl: "../assets/products/tart.jpg",
             detailVisible: false
           }
         ]
@@ -64,21 +64,21 @@ function Menu(props) {
             productName: "French Fries",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "urlToImage",
+            imageUrl: "../assets/products/pizza.jpg",
             detailVisible: false
           },
           {
             productName: "Onion Rings",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "urlToImage",
+            imageUrl: "../assets/products/pizza.jpg",
             detailVisible: false
           },
           {
             productName: "Fried Shrimps",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "urlToImage",
+            imageUrl: "../assets/products/pizza.jpg",
             detailVisible: false
           },
         ]
@@ -90,21 +90,21 @@ function Menu(props) {
             productName: "Water",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "urlToImage",
+            imageUrl: "../assets/products/drink.jpg",
             detailVisible: false
           },
           {
             productName: "Coke",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "urlToImage",
+            imageUrl: "../assets/products/drink.jpg",
             detailVisible: false
           },
           {
             productName: "Beer",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "urlToImage",
+            imageUrl: "../assets/products/drink.jpg",
             detailVisible: false
           },
         ]
@@ -126,7 +126,7 @@ function Menu(props) {
     let iconColor = "#FF5733"
     if (detailVisible) {
       iconName = "ios-arrow-down";
-      iconColor = "#202020";
+      iconColor = "#373737";
     }
   
     return (<Ionicons name={iconName} size={24} color={iconColor} />)
@@ -136,7 +136,8 @@ function Menu(props) {
     if(item.detailVisible){
       return (
       <View>
-        <Image source={require('../assets/product/drink.jpg')} />
+        <Image source={{uri: item.imageUrl}}
+             style={{width: 300, height: 300}} />
         <Text>{item.productName}</Text>
         <Text>{item.desciption}</Text>
         <Text>{item.price}</Text>
