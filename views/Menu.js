@@ -19,21 +19,21 @@ function Menu(props) {
             productName: "Pizza",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "https://reactjs.org/logo-og.png",
+            imageUrl: "http://omercan.net/pocketMenuAssets/pizza.jpg",
             detailVisible: false
           },
           {
             productName: "Burger",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "../assets/products/steak.jpg",
+            imageUrl: "http://omercan.net/pocketMenuAssets/steak.jpg",
             detailVisible: false
           },
           {
             productName: "Risotto",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "../assets/products/steak.jpg",
+            imageUrl: "http://omercan.net/pocketMenuAssets/steak.jpg",
             detailVisible: false
           },
         ]
@@ -45,14 +45,14 @@ function Menu(props) {
             productName: "Cheese Cake",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "../assets/products/tart.jpg",
+            imageUrl: "http://omercan.net/pocketMenuAssets/tart.jpg",
             detailVisible: false
           },
           {
             productName: "Ice Cream",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "../assets/products/tart.jpg",
+            imageUrl: "http://omercan.net/pocketMenuAssets/tart.jpg",
             detailVisible: false
           }
         ]
@@ -64,21 +64,21 @@ function Menu(props) {
             productName: "French Fries",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "../assets/products/pizza.jpg",
+            imageUrl: "",
             detailVisible: false
           },
           {
             productName: "Onion Rings",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "../assets/products/pizza.jpg",
+            imageUrl: "http://omercan.net/pocketMenuAssets/drink.jpg",
             detailVisible: false
           },
           {
             productName: "Fried Shrimps",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "../assets/products/pizza.jpg",
+            imageUrl: "",
             detailVisible: false
           },
         ]
@@ -90,21 +90,21 @@ function Menu(props) {
             productName: "Water",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "../assets/products/drink.jpg",
+            imageUrl: "http://omercan.net/pocketMenuAssets/drink.jpg",
             detailVisible: false
           },
           {
             productName: "Coke",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "../assets/products/drink.jpg",
+            imageUrl: "",
             detailVisible: false
           },
           {
             productName: "Beer",
             desciption: "Açıklama açıklama lorem ipsum.",
             price: "25₺",
-            imageUrl: "../assets/products/drink.jpg",
+            imageUrl: "http://omercan.net/pocketMenuAssets/drink.jpg",
             detailVisible: false
           },
         ]
@@ -134,15 +134,30 @@ function Menu(props) {
 
   const ProductDetail = function ( {item} ) {
     if(item.detailVisible){
-      return (
-      <View>
-        <Image source={{uri: item.imageUrl}}
-             style={{width: 300, height: 300}} />
-        <Text>{item.productName}</Text>
-        <Text>{item.desciption}</Text>
-        <Text>{item.price}</Text>
-      </View>
-      )
+      if(item.imageUrl != ""){
+        return (
+          <View>
+            <Image source={{uri: item.imageUrl}}
+                 style={{
+                   width: '100%', 
+                   height: 300,
+                   borderRadius: 2
+                  }}
+                 resizeMode={'contain'} />
+            <Text>{item.productName}</Text>
+            <Text>{item.desciption}</Text>
+            <Text>{item.price}</Text>
+          </View>
+          )
+      }else{
+        return(
+          <View>
+            <Text>{item.productName}</Text>
+            <Text>{item.desciption}</Text>
+            <Text>{item.price}</Text>
+          </View>
+        )
+      }
     }
 
     return (<View></View>)
