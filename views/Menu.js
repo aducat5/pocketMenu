@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react'
-import { SafeAreaView, StyleSheet, Text, View, Image, SectionList } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Image, SectionList, ImageBackground } from 'react-native';
 import Constants from "expo-constants";
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
@@ -17,14 +17,14 @@ function Menu(props) {
         data: [
           {
             productName: "Pizza",
-            desciption: "Açıklama açıklama lorem ipsum.",
+            desciption: "Açıklama açıklama lorem ipsuaçıklama lorem ipsum. Açıklama açıklama lorem ipsum..length / 40.length / 40",
             price: "25₺",
             imageUrl: "http://omercan.net/pocketMenuAssets/pizza.jpg",
             detailVisible: false
           },
           {
             productName: "Burger",
-            desciption: "Açıklama açıklama lorem ipsum.",
+            desciption: "Açıklama açıklama lorem ipsum.Açıklama açıklama lorem ipsuaçıklama lorem ipsum. Açıklama açıklama lorem ipsum..length / 40.length / 40Açıklama açıklama Açıklama açıklama lorem ipsuaçıklama lorem ipsum. Açıklama açıklama lorem ipsum..length / 40.length / 40",
             price: "25₺",
             imageUrl: "http://omercan.net/pocketMenuAssets/steak.jpg",
             detailVisible: false
@@ -111,7 +111,18 @@ function Menu(props) {
       }
     ]
   };
-  
+
+  // let imageUrls = [];
+
+  // DATA.menus.forEach(function (menu) {
+  //   // console.log(menu);
+  //   menu.data.forEach(function (product) {
+  //     if(product.imageUrl != ""){
+  //       Image.prefetch(product.imageUrl);
+  //     }
+  //   });
+  // });  
+
   const [menuData, setMenuData] = useState(DATA);
   const [refresh, setRefresh] = useState(false);
 
@@ -135,18 +146,31 @@ function Menu(props) {
   const ProductDetail = function ( {item} ) {
     if(item.detailVisible){
       if(item.imageUrl != ""){
+        let lineCount = Math.round(item.desciption.length / 40);
+        let desciptionHeight = lineCount * 0.10;
+        if (desciptionHeight < 0.2) desciptionHeight = 0.2
+        console.log(lineCount);
         return (
           <View>
-            <Image source={{uri: item.imageUrl}}
-                 style={{
-                   width: '100%', 
-                   height: 300,
-                   borderRadius: 2
+            <View>
+              <ImageBackground style={style.productImage} source={{uri: item.imageUrl}} resizeMode={'contain'}>
+                <View
+                  style={{
+                    backgroundColor:"white",
+                    flex: desciptionHeight,
+                    justifyContent:"center",
+                    opacity: 0.65,
+                    paddingLeft: 15,
+                    // borderTopLeftRadius: 15,
+                    borderTopRightRadius: 30
                   }}
-                 resizeMode={'contain'} />
-            <Text>{item.productName}</Text>
-            <Text>{item.desciption}</Text>
-            <Text>{item.price}</Text>
+                >
+                  {/* <Text>{item.productName}</Text> */}
+                  <Text style={{fontSize: 14, marginBottom: 10}}>{item.desciption}</Text>
+                  <Text style={{fontSize: 14}}>{item.price}</Text>
+                </View>
+              </ImageBackground>
+            </View>
           </View>
           )
       }else{
@@ -177,7 +201,6 @@ function Menu(props) {
             <View style={{flexDirection:"row"}}>
               <Text style={style.productName}>{item.productName}</Text>
             </View>
-            {/* <Text style={style.productPrice}>{desciption}</Text> */}
             <Text style={style.productPrice} >{item.price}</Text>
           </View>
           <View style={{flex:0.5}} >
@@ -248,7 +271,17 @@ const style = StyleSheet.create({
   sectionText: {
     marginLeft: 5,
     fontSize: 20
+  },
+  productImage:{
+    width: '100%', 
+    height:  325,
+    // height: 310,
+    borderRadius: 15,
+    flex:1,
+    justifyContent:"flex-end",
+    // flexDirection:"column",
   }
+  
 });
     
 export default Menu;
