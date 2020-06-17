@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "pocketMenu",
-    "slug": "pocketMenu",
+    "slug": "pocketmenu",
     "platforms": [
       "ios",
       "android",
@@ -24,9 +24,10 @@
     "ios": {
       "supportsTablet": true
     },
-    "android":{
+    "android": {
       "package": "com.slothdev.pocketmenu",
       "versionCode": 1
-    }
+    },
+    "description": ""
   }
 }

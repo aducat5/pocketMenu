@@ -6,6 +6,30 @@ import Constants from "expo-constants";
 
 import Menu from "./Menu.js";
 
+const style = StyleSheet.create({
+  container:{
+      marginTop: Constants.statusBarHeight + 10,
+  },
+  listItem: {
+    flex:1,
+    flexDirection:"row",
+    alignItems:"center",
+    justifyContent:"center",
+    height:60,
+    borderBottomColor:"#E5E5E5",
+    borderBottomWidth:1,
+    backgroundColor:"#EEEEEE"
+  },
+  listItemText: {
+    flex:4.5,
+    marginLeft:30,
+    flexDirection:"column"
+  },
+  listItemArrow:{
+    flex:0.5,
+  }
+});
+
 const lastScans = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -69,29 +93,6 @@ function MenuHistory(props) {
     );
 }
 
-const style = StyleSheet.create({
-  container:{
-      marginTop: Constants.statusBarHeight + 10,
-  },
-  listItem: {
-    flex:1,
-    flexDirection:"row",
-    alignItems:"center",
-    justifyContent:"center",
-    height:60,
-    borderBottomColor:"#E5E5E5",
-    borderBottomWidth:1,
-    backgroundColor:"#EEEEEE"
-  },
-  listItemText: {
-    flex:4.5,
-    marginLeft:30,
-    flexDirection:"column"
-  },
-  listItemArrow:{
-    flex:0.5,
-  }
-});
   
 export default MenuHistory;
 
