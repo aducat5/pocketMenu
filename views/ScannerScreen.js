@@ -11,8 +11,11 @@ const style = StyleSheet.create({
         flexDirection: "column",
     }
   });
+
+var navigation = null;
   
 function ScannerScreen(props) {
+    navigation = props.navigation;
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
 
@@ -26,10 +29,14 @@ function ScannerScreen(props) {
 
     const handleBarCodeScanned = ({ type, data }) => {
         setScanned(true);
-        alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-    };
-
-    
+        dataArray = data.split("-");
+        if (dataArray[0] === "https://pma.ist/menu"){
+            menuId = dataArray[1];
+            navigation.navigate("Menu", {menuId : menuId});
+        }else{
+            alert(`The barcode you have scanned is not a PocketMenu. But it does carry this data:` + data);
+        }
+    };   
 
     if (hasPermission === false) {
         return (

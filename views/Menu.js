@@ -7,7 +7,11 @@ import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture
 
 function Menu(props) {
   var menuId = props.route.params.menuId;
-
+  // var menuId = 1;
+  // menuId = 1;
+  // const hash = base64.encode(username + ":" + password);
+  
+  
   var DATA = {
     restourantId: "1",
     restourantName: "First Restourant",
@@ -16,115 +20,57 @@ function Menu(props) {
         title: "Main dishes",
         data: [
           {
-            productName: "Pizza",
-            desciption: "Açıklama açıklama lorem ipsuaçıklama lorem ipsum. Açıklama açıklama lorem ipsum..length / 40.length / 40",
+            productName: "Product",
+            desciption: "Description",
             price: "25₺",
-            imageUrl: "http://omercan.net/pocketMenuAssets/pizza.jpg",
-            detailVisible: false
-          },
-          {
-            productName: "Burger",
-            desciption: "Açıklama açıklama lorem ipsum.Açıklama açıklama lorem ipsuaçıklama lorem ipsum. Açıklama açıklama lorem ipsum..length / 40.length / 40Açıklama açıklama Açıklama açıklama lorem ipsuaçıklama lorem ipsum. Açıklama açıklama lorem ipsum..length / 40.length / 40",
-            price: "25₺",
-            imageUrl: "http://omercan.net/pocketMenuAssets/steak.jpg",
-            detailVisible: false
-          },
-          {
-            productName: "Risotto",
-            desciption: "Açıklama açıklama lorem ipsum.",
-            price: "25₺",
-            imageUrl: "http://omercan.net/pocketMenuAssets/steak.jpg",
-            detailVisible: false
-          },
-        ]
-      },
-      {
-        title: "Desserts",
-        data: [
-          {
-            productName: "Cheese Cake",
-            desciption: "Açıklama açıklama lorem ipsum.",
-            price: "25₺",
-            imageUrl: "http://omercan.net/pocketMenuAssets/tart.jpg",
-            detailVisible: false
-          },
-          {
-            productName: "Ice Cream",
-            desciption: "Açıklama açıklama lorem ipsum.",
-            price: "25₺",
-            imageUrl: "http://omercan.net/pocketMenuAssets/tart.jpg",
+            imageUrl: "image",
             detailVisible: false
           }
-        ]
-      },
-      {
-        title: "Sides",
-        data: [
-          {
-            productName: "French Fries",
-            desciption: "Açıklama açıklama lorem ipsum.",
-            price: "25₺",
-            imageUrl: "",
-            detailVisible: false
-          },
-          {
-            productName: "Onion Rings",
-            desciption: "Açıklama açıklama lorem ipsum.",
-            price: "25₺",
-            imageUrl: "http://omercan.net/pocketMenuAssets/drink.jpg",
-            detailVisible: false
-          },
-          {
-            productName: "Fried Shrimps",
-            desciption: "Açıklama açıklama lorem ipsum.",
-            price: "25₺",
-            imageUrl: "",
-            detailVisible: false
-          },
-        ]
-      },
-      {
-        title: "Drinks",
-        data: [
-          {
-            productName: "Water",
-            desciption: "Açıklama açıklama lorem ipsum.",
-            price: "25₺",
-            imageUrl: "http://omercan.net/pocketMenuAssets/drink.jpg",
-            detailVisible: false
-          },
-          {
-            productName: "Coke",
-            desciption: "Açıklama açıklama lorem ipsum.",
-            price: "25₺",
-            imageUrl: "",
-            detailVisible: false
-          },
-          {
-            productName: "Beer",
-            desciption: "Açıklama açıklama lorem ipsum.",
-            price: "25₺",
-            imageUrl: "http://omercan.net/pocketMenuAssets/drink.jpg",
-            detailVisible: false
-          },
         ]
       }
     ]
   };
-
-  // let imageUrls = [];
-
-  // DATA.menus.forEach(function (menu) {
-  //   // console.log(menu);
-  //   menu.data.forEach(function (product) {
-  //     if(product.imageUrl != ""){
-  //       Image.prefetch(product.imageUrl);
-  //     }
-  //   });
-  // });  
-
+ 
   const [menuData, setMenuData] = useState(DATA);
   const [refresh, setRefresh] = useState(false);
+  const [menuLoaded, setMenuLoaded] = useState(false);
+
+  function getMenuData(menuId) {
+    return fetch('https://pma.ist/api/seller', {
+      method: 'POST',
+      headers: {
+        "Authorization": "Basic SEFSRENPREVEVU5BTUVGVFdNRlM6aGFyZGNvZGVkcHdkc2Z0d21mcw==",
+        'Accept': 'application/json',
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify(menuId)
+    }).then((response) => response.json())
+      .then((json) => {
+        return json;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+  
+  var localPromise = getMenuData(menuId);
+  localPromise.then(function (result) {
+    DATA.restourantName = result.SellerName;
+    DATA.menus = [];
+    result.Data.forEach(menu => {
+      
+      menu = JSON.parse(menu);
+      DATA.menus.push(menu);
+      
+    });
+
+    if(!menuLoaded){
+      setMenuLoaded(true);
+      setRefresh(!refresh);
+    }
+  }, function (error) {
+    
+  });
 
   function productOnPress(product) {
     product.detailVisible = !product.detailVisible;
@@ -141,15 +87,16 @@ function Menu(props) {
     }
   
     return (<Ionicons name={iconName} size={24} color={iconColor} />)
-  }
+  };
 
+  
   const ProductDetail = function ( {item} ) {
     if(item.detailVisible){
       if(item.imageUrl != ""){
         let lineCount = Math.round(item.desciption.length / 40);
         let desciptionHeight = lineCount * 0.10;
         if (desciptionHeight < 0.2) desciptionHeight = 0.2
-        console.log(lineCount);
+        // console.log(lineCount);
         return (
           <View>
             <View>
@@ -183,7 +130,6 @@ function Menu(props) {
         )
       }
     }
-
     return (<View></View>)
   }
     
