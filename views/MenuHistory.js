@@ -32,19 +32,19 @@ const style = StyleSheet.create({
 
 const lastScans = [
   {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    id: '1',
     retourantName: 'First Restourant',
     location: "Taksim",
     date: "5 January 2020"
   },
   {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    id: '2',
     retourantName: 'Second Restourant',
     location: "Kadıköy",
     date: "15 November 2019"
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    id: '3',
     retourantName: 'Third Restourant',
     location: "Tuzla",
     date: "23 April 2020"

@@ -13,11 +13,11 @@ function Menu(props) {
   
   
   var DATA = {
-    restourantId: "1",
-    restourantName: "First Restourant",
+    restourantName: "Menu Loading...",
+    accentColor: "#FF5733",
     menus: [
       {
-        title: "Main dishes",
+        title: "Menu Loading",
         data: [
           {
             productName: "Product",
@@ -56,6 +56,9 @@ function Menu(props) {
   var localPromise = getMenuData(menuId);
   localPromise.then(function (result) {
     DATA.restourantName = result.SellerName;
+
+    DATA.accentColor = JSON.parse(result.SellerJSON).accentColor;
+
     DATA.menus = [];
     result.Data.forEach(menu => {
       
@@ -74,18 +77,18 @@ function Menu(props) {
 
   function productOnPress(product) {
     product.detailVisible = !product.detailVisible;
-    setMenuData(menuData);
+    // setMenuData(menuData);
     setRefresh(!refresh);
   }
 
   const SeeDetailIcon = function ( {detailVisible} ) {
+    
     let iconName = "ios-arrow-forward";
-    let iconColor = "#FF5733"
+    let iconColor = DATA.accentColor;
     if (detailVisible) {
       iconName = "ios-arrow-down";
       iconColor = "#373737";
     }
-  
     return (<Ionicons name={iconName} size={24} color={iconColor} />)
   };
 
@@ -96,7 +99,6 @@ function Menu(props) {
         let lineCount = Math.round(item.desciption.length / 40);
         let desciptionHeight = lineCount * 0.10;
         if (desciptionHeight < 0.2) desciptionHeight = 0.2
-        // console.log(lineCount);
         return (
           <View>
             <View>
@@ -121,12 +123,26 @@ function Menu(props) {
           </View>
           )
       }else{
+        let lineCount = Math.round(item.description.length / 40);
+        let descriptionHeight = lineCount * 0.10;
+        if (descriptionHeight < 0.2) descriptionHeight = 0.2
         return(
-          <View>
-            <Text>{item.productName}</Text>
-            <Text>{item.desciption}</Text>
-            <Text>{item.price}</Text>
-          </View>
+        <View
+          style={{
+            backgroundColor:"white",
+            flex: descriptionHeight,
+            justifyContent:"center",
+            opacity: 0.65,
+            paddingLeft: 10,
+            paddingTop: 20,
+            // borderTopLeftRadius: 15,
+            borderTopRightRadius: 30
+          }}
+        >
+          {/* <Text>{item.productName}</Text> */}
+          <Text style={{fontSize: 14, marginBottom: 10}}>{item.description}</Text>
+          <Text style={{fontSize: 14}}>{item.price}</Text>
+        </View>
         )
       }
     }
@@ -163,8 +179,8 @@ function Menu(props) {
   return (
     <View style={style.container}>
       <SafeAreaView>
-        <View style={{borderBottomWidth: 2, borderBottomColor: "#E5E5E5", marginVertical:10}}>
-          <Text style={{fontSize: 22, marginBottom:10}}>{menuData.restourantName}</Text>
+        <View style={{borderBottomWidth: 2, borderBottomColor: DATA.accentColor, marginVertical:10}}>
+          <Text style={{fontSize: 24, marginBottom:10}}>{menuData.restourantName}</Text>
         </View>
         <SectionList
           sections={menuData.menus}
@@ -200,7 +216,7 @@ const style = StyleSheet.create({
     flex:4
   },
   productName: {
-    fontSize: 16,
+    fontSize: 13,
     color:"#373737"
   },
   productPrice: {
@@ -210,13 +226,13 @@ const style = StyleSheet.create({
   },
   sectionHeader: {
     marginVertical: 10,
-    borderBottomColor: "#FF5733",
+    // borderBottomColor: "#FF5733",
     borderBottomWidth: 2,
     borderRadius: 5
   },
   sectionText: {
     marginLeft: 5,
-    fontSize: 20
+    fontSize: 17
   },
   productImage:{
     width: '100%', 
@@ -227,7 +243,6 @@ const style = StyleSheet.create({
     justifyContent:"flex-end",
     // flexDirection:"column",
   }
-  
 });
     
 export default Menu;
