@@ -6,75 +6,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 function Menu(props) {
-  var menuId = props.route.params.menuId;
-  // var menuId = 1;
-  // menuId = 1;
-  // const hash = base64.encode(username + ":" + password);
+  var DATA = props.route.params.menuData;
   
-  
-  var DATA = {
-    restourantName: "Menu Loading...",
-    accentColor: "#FF5733",
-    menus: [
-      {
-        title: "Menu Loading",
-        data: [
-          {
-            productName: "Product",
-            desciption: "Description",
-            price: "25₺",
-            imageUrl: "image",
-            detailVisible: false
-          }
-        ]
-      }
-    ]
-  };
- 
-  const [menuData, setMenuData] = useState(DATA);
+  // const [menuData, setMenuData] = useState(menu);
   const [refresh, setRefresh] = useState(false);
-  const [menuLoaded, setMenuLoaded] = useState(false);
-
-  function getMenuData(menuId) {
-    return fetch('https://pma.ist/api/seller', {
-      method: 'POST',
-      headers: {
-        "Authorization": "Basic SEFSRENPREVEVU5BTUVGVFdNRlM6aGFyZGNvZGVkcHdkc2Z0d21mcw==",
-        'Accept': 'application/json',
-        "Content-Type": "application/json; charset=utf-8"
-      },
-      body: JSON.stringify(menuId)
-    }).then((response) => response.json())
-      .then((json) => {
-        return json;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
+  // const [menuLoaded, setMenuLoaded] = useState(false);
   
-  var localPromise = getMenuData(menuId);
-  localPromise.then(function (result) {
-    DATA.restourantName = result.SellerName;
-
-    DATA.accentColor = JSON.parse(result.SellerJSON).accentColor;
-
-    DATA.menus = [];
-    result.Data.forEach(menu => {
-      
-      menu = JSON.parse(menu);
-      DATA.menus.push(menu);
-      
-    });
-
-    if(!menuLoaded){
-      setMenuLoaded(true);
-      setRefresh(!refresh);
-    }
-  }, function (error) {
-    
-  });
-
   function productOnPress(product) {
     product.detailVisible = !product.detailVisible;
     // setMenuData(menuData);
@@ -134,14 +71,14 @@ function Menu(props) {
             justifyContent:"center",
             opacity: 0.65,
             paddingLeft: 10,
-            paddingTop: 20,
+            paddingVertical:15,
             // borderTopLeftRadius: 15,
-            borderTopRightRadius: 30
+            // borderTopRightRadius: 30
           }}
         >
           {/* <Text>{item.productName}</Text> */}
-          <Text style={{fontSize: 14, marginBottom: 10}}>{item.description}</Text>
-          <Text style={{fontSize: 14}}>{item.price}</Text>
+          <Text style={{fontSize: 12, marginBottom: 10}}>{item.description}</Text>
+          <Text style={{fontSize: 11}}>{item.price}</Text>
         </View>
         )
       }
@@ -150,8 +87,13 @@ function Menu(props) {
   }
     
   const SectionHeader = ({ title }) => (
-    <View style={style.sectionHeader}>
-      <Text style={style.sectionText} >{title}</Text>
+    <View style={{
+      marginVertical: 10,
+      borderBottomColor: DATA.accentColor,
+      borderBottomWidth: 2,
+      borderRadius: 5
+    }}>
+      <Text style={style.sectionText, {marginBottom: 5}} >{title}</Text>
     </View>
   );
   
@@ -179,11 +121,17 @@ function Menu(props) {
   return (
     <View style={style.container}>
       <SafeAreaView>
-        <View style={{borderBottomWidth: 2, borderBottomColor: DATA.accentColor, marginVertical:10}}>
-          <Text style={{fontSize: 24, marginBottom:10}}>{menuData.restourantName}</Text>
+        <View style={{
+          marginVertical:15,
+          borderBottomColor: "#EEEEEE",
+          borderBottomWidth: 2,
+          borderRadius: 5
+          
+          }}>
+          <Text style={{fontSize: 28}}>{DATA.restourantName}</Text>
         </View>
         <SectionList
-          sections={menuData.menus}
+          sections={DATA.menus}
           extraData={refresh}
           keyExtractor={(item, index) => item + index}
           renderItem={({ item }) => <Product item={item} onPress={productOnPress} />}
@@ -205,10 +153,11 @@ const style = StyleSheet.create({
     flexDirection:"row",
     alignItems:"center",
     justifyContent:"flex-start",
-    height:60,
+    // height:70,
     borderTopColor:"#E5E5E5",
     borderTopWidth:1,
-    backgroundColor:"#EEEEEE"
+    backgroundColor:"#EEEEEE",
+    paddingVertical: 15
   },
   productText: {
     marginLeft: 10,
@@ -217,16 +166,17 @@ const style = StyleSheet.create({
   },
   productName: {
     fontSize: 13,
-    color:"#373737"
+    color:"#373737",
+    width: "95%"
   },
   productPrice: {
-    fontSize: 12,
-    color:"#4F4F4F"
-    
+    fontSize: 10,
+    color:"#4F4F4F",
+    width: "95%"    
   },
   sectionHeader: {
     marginVertical: 10,
-    // borderBottomColor: "#FF5733",
+    borderBottomColor: "#FF5733",
     borderBottomWidth: 2,
     borderRadius: 5
   },

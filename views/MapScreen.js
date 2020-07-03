@@ -1,21 +1,17 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Image } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import EmptyPage from '../components/EmptyPage';
 
 function MapScreen(props) {
-    console.log(props);
     return (
-        <View>
-            <Image source={require('../assets/map.png')}></Image>
-        </View>
+        <EmptyPage
+        title="Under Development"
+        detail="We are still developing this feature. Thanks for your understanding."
+        iconclor="#EAEAEA"
+        iconname="ios-construct"
+        />
         );
 }
-
-const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        flexDirection:"column",
-        marginTop:20
-    }
-});
 
 export default MapScreen;

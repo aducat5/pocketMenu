@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, Button, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Button, ActivityIndicator, ToastAndroid, AsyncStorage } from 'react-native';
 import Constants from "expo-constants";
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
@@ -13,7 +13,68 @@ const style = StyleSheet.create({
   });
 
 var navigation = null;
-  
+
+var getMenuData = function (menuId, onSuccess, onFailure) {
+      var localPromise = fetch('https://pma.ist/api/seller', {
+      method: 'POST',
+      headers: {
+        "Authorization": "Basic SEFSRENPREVEVU5BTUVGVFdNRlM6aGFyZGNvZGVkcHdkc2Z0d21mcw==",
+        'Accept': 'application/json',
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify(menuId)
+    }).then((response) => response.json()).then((json) => {return json;}).catch((error) => {console.error(error);});
+
+    localPromise.then(function (result) {
+        if(result.SellerName != null){
+            var DATA = {
+                "restourantName": result.SellerName,
+                "accentColor": JSON.parse(result.SellerJSON).accentColor,
+                "menus": []
+            };
+    
+            result.Data.forEach(menu => {
+                menu = JSON.parse(menu);
+                DATA.menus.push(menu);
+            });
+            
+            if(onSuccess)
+                onSuccess(DATA);
+        }else{
+            if(onFailure != null)
+                onFailure(result.Result);
+        }
+    }, function (error) {
+        if(onFailure != null)
+            onFailure(error);
+    });
+};
+
+let addToHistory = async function (scannedMenu) {
+    let menuHistory = await AsyncStorage.getItem("menuHistory");
+    if (menuHistory == null){
+        menuHistory = [scannedMenu];
+        await AsyncStorage.setItem("menuHistory", JSON.stringify(menuHistory));
+    }else{
+        menuHistory = JSON.parse(menuHistory);
+        let tempHistoryArray = [];
+        tempHistoryArray.push(scannedMenu);
+        menuHistory.forEach(function (item, index, array) {
+            if (item.id !== scannedMenu.id)
+                tempHistoryArray.push(item);
+        });
+        menuHistory = tempHistoryArray;
+        if(menuHistory.length > 10)
+            menuHistory.pop();
+        await AsyncStorage.setItem("menuHistory", JSON.stringify(menuHistory));
+    }
+};
+
+let getTodayDate = function () {
+  let dateObject = new Date();
+  return dateObject.getDay() + "." + dateObject.getMonth() + "." + dateObject.getFullYear(); 
+};
+
 function ScannerScreen(props) {
     navigation = props.navigation;
     const [hasPermission, setHasPermission] = useState(null);
@@ -28,11 +89,30 @@ function ScannerScreen(props) {
 
 
     const handleBarCodeScanned = ({ type, data }) => {
-        setScanned(true);
-        dataArray = data.split("-");
-        if (dataArray[0] === "https://pma.ist/menu"){
-            menuId = dataArray[1];
-            navigation.navigate("Menu", {menuId : menuId});
+        let urlParts = data.split("-");
+        if (urlParts[0] === "https://pma.ist/menu"){
+            var menuId = urlParts[1];
+            getMenuData(menuId, function (menuData) {
+                let historyItem = {
+                    "id": menuId,
+                    "name": menuData.restourantName,
+                    // "location": menuData.location,
+                    "date": getTodayDate()
+                };
+                addToHistory(historyItem);
+                navigation.navigate("Menu", {menuData : menuData});
+            }, function (error) {
+                // console.log(error);
+                setScanned(true);
+                
+                ToastAndroid.showWithGravityAndOffset(
+                    error,
+                    ToastAndroid.LONG,
+                    ToastAndroid.CENTER,
+                    25,
+                    50
+                  );
+            });
         }else{
             alert(`The barcode you have scanned is not a PocketMenu. But it does carry this data:` + data);
         }
@@ -57,13 +137,15 @@ function ScannerScreen(props) {
         return (
             <View style={style.container}>
                 <View style={{
-                    padding:20,
-                    flexDirection:"row"
+                    // padding:20,
+                    flexDirection:"column"
                 }}>
-                    <Text>Looking for camera permissions.</Text>
                     <ActivityIndicator
                     color="#FF5733"
+                    size="large"
                     />
+                    <Text style={{textAlign:"center"}}>Looking for camera permissions.</Text>
+                    
                 </View>
             </View>
             );    
