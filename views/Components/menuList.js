@@ -4,10 +4,10 @@ import { SectionHeader } from "./sectionHeader";
 import { Product } from "./product";
 
 export const MenuList = ({ data }) => {
-  const { accentColor } = data || {};
+  const { accentColor, menus } = data || {};
   return (
     <SectionList
-      sections={data.menus}
+      sections={menus}
       keyExtractor={(item, index) => item + index}
       renderItem={({ item }) => (
         <Product item={item} accentColor={accentColor} />
