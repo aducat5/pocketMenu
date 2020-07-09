@@ -91,6 +91,7 @@ const style = StyleSheet.create({
     flex: 1,
     marginTop: Constants.statusBarHeight,
     marginHorizontal: 16,
+    marginBottom: 70,
   },
   content: {
     marginVertical: 15,

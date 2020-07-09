@@ -18,12 +18,13 @@ export const ProductDetail = ({ item, detailVisible }) => {
             opacity: 0.65,
             paddingLeft: 15,
             // borderTopLeftRadius: 15,
-            borderTopRightRadius: 30,
+            // borderTopRightRadius: 30,
+            paddingVertical: 15,
           }}
         >
-          <Text>{productName}</Text>
-          <Text style={{ fontSize: 14, marginBottom: 10 }}>{description}</Text>
-          <Text style={{ fontSize: 14 }}>{price}</Text>
+          {/* <Text>{productName}</Text> */}
+          <Text style={{ fontSize: 13, marginBottom: 10 }}>{description}</Text>
+          <Text style={{ fontSize: 13 }}>{price}</Text>
         </View>
       ) : (
         <ImageBackground
