@@ -99,11 +99,11 @@ const MenuHistory = (props) => {
   };
 
   const onListItemHandler = (menuId) => {
-    console.log("menuId", menuId);
-    getMenuData(menuId, function (menuData) {
-      navigation.navigate("Menu", { menuData: menuData });
-    });
-    // navigation.navigate("Menu", {menuId : menuId});
+    // console.log("menuId", menuId);
+    // getMenuData(menuId, function (menuData) {
+    //   navigation.navigate("Menu", { menuData: menuData });
+    // });
+    navigation.navigate("Menu", {menuId});
   };
 
   if (isLoading) {
