@@ -92,27 +92,28 @@ function ScannerScreen(props) {
         let urlParts = data.split("-");
         if (urlParts[0] === "https://pma.ist/menu"){
             var menuId = urlParts[1];
-            getMenuData(menuId, function (menuData) {
-                let historyItem = {
-                    "id": menuId,
-                    "name": menuData.restourantName,
-                    // "location": menuData.location,
-                    "date": getTodayDate()
-                };
-                addToHistory(historyItem);
-                navigation.navigate("Menu", {menuData : menuData});
-            }, function (error) {
-                // console.log(error);
-                setScanned(true);
+            // getMenuData(menuId, function (menuData) {
+            //     let historyItem = {
+            //         "id": menuId,
+            //         "name": menuData.restourantName,
+            //         // "location": menuData.location,
+            //         "date": getTodayDate()
+            //     };
+            //     addToHistory(historyItem);
+            //     navigation.navigate("Menu", {menuData : menuData});
+            // }, function (error) {
+            //     // console.log(error);
+            //     setScanned(true);
                 
-                ToastAndroid.showWithGravityAndOffset(
-                    error,
-                    ToastAndroid.LONG,
-                    ToastAndroid.CENTER,
-                    25,
-                    50
-                  );
-            });
+            //     ToastAndroid.showWithGravityAndOffset(
+            //         error,
+            //         ToastAndroid.LONG,
+            //         ToastAndroid.CENTER,
+            //         25,
+            //         50
+            //       );
+            // });
+            navigation.navigate("Menu", {menuId});
         }else{
             alert(`The barcode you have scanned is not a PocketMenu. But it does carry this data:` + data);
         }
