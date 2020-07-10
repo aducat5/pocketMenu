@@ -16,6 +16,7 @@ const Menu = (props) => {
   useEffect(() => {
     setIsMenuLoading(true);
     getMenuData(menuId, function (data) {
+      // console.log(data);
       setMenuData(data);
       setIsMenuLoading(false);
     });
@@ -34,6 +35,7 @@ const Menu = (props) => {
     })
       .then((response) => response.json())
       .then((json) => {
+        // console.log(json.Result);
         return json;
       })
       .catch((error) => {
@@ -42,21 +44,25 @@ const Menu = (props) => {
 
     localPromise.then(
       function (result) {
-        if (result.SellerName != null) {
-          var DATA = {
-            restourantName: result.SellerName,
-            accentColor: JSON.parse(result.SellerJSON).accentColor,
-            menus: [],
-          };
+        // console.log(result.Result);
+        if (result.Status) {
+          // var DATA = {
+          //   restourantName: result.SellerName,
+          //   accentColor: JSON.parse(result.SellerJSON).accentColor,
+          //   menus: [],
+          // };
 
-          result.Data.forEach((menu) => {
-            menu = JSON.parse(menu);
-            DATA.menus.push(menu);
-          });
+          // result.Data.forEach((menu) => {
+          //   menu = JSON.parse(menu);
+          //   DATA.menus.push(menu);
+          // });
+          let DATA = JSON.parse(result.Result);
 
-          if (onSuccess) onSuccess(DATA);
+          if (onSuccess) 
+            onSuccess(DATA);
         } else {
-          if (onFailure != null) onFailure(result.Result);
+          if (onFailure != null) 
+            onFailure(result.Result);
         }
       },
       function (error) {
@@ -64,20 +70,17 @@ const Menu = (props) => {
       }
     );
   };
-  
-  // const {
-  //   params: { menuData: DATA = [] },
-  // } = props.route || {};
-  // const { restourantName = "" } = DATA || {};
+
   if(isMenuLoading){
     return(<View style={{flex:1, alignItems:"center", justifyContent:"center"}}><ActivityIndicator /></View>);
   }else{
+    console.log(menuData);
     return (
       <View style={style.container}>
         <SafeAreaView>
           <View style={style.content}>
-            {menuData && 
-            <Text style={{ fontSize: 28 }}>{menuData.restourantName}</Text>
+            {menuData &&
+            <Text style={{ fontSize: 28 }}>{menuData.restaurantName}</Text>
             }
           </View>
           {menuData && <MenuList data={menuData} />}
