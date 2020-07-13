@@ -16,7 +16,6 @@ const Menu = (props) => {
   useEffect(() => {
     setIsMenuLoading(true);
     getMenuData(menuId, function (data) {
-      // console.log(data);
       setMenuData(data);
       setIsMenuLoading(false);
     });
@@ -35,7 +34,6 @@ const Menu = (props) => {
     })
       .then((response) => response.json())
       .then((json) => {
-        // console.log(json.Result);
         return json;
       })
       .catch((error) => {
@@ -44,7 +42,6 @@ const Menu = (props) => {
 
     localPromise.then(
       function (result) {
-        // console.log(result.Result);
         if (result.Status) {
           // var DATA = {
           //   restourantName: result.SellerName,
@@ -74,7 +71,6 @@ const Menu = (props) => {
   if(isMenuLoading){
     return(<View style={{flex:1, alignItems:"center", justifyContent:"center"}}><ActivityIndicator /></View>);
   }else{
-    console.log(menuData);
     return (
       <View style={style.container}>
         <SafeAreaView>
