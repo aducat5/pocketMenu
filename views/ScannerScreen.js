@@ -102,7 +102,6 @@ function ScannerScreen(props) {
             //     addToHistory(historyItem);
             //     navigation.navigate("Menu", {menuData : menuData});
             // }, function (error) {
-            //     // console.log(error);
             //     setScanned(true);
                 
             //     ToastAndroid.showWithGravityAndOffset(

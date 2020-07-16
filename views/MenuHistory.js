@@ -47,7 +47,6 @@ const MenuHistory = (props) => {
   useEffect(() => {
     const getData = async () => {
       let _lastScans = await AsyncStorage.getItem("menuHistory");
-      // console.log(_lastScans);
       setLastScans(JSON.parse(_lastScans));
       setIsLoading(false);
     };
@@ -99,7 +98,6 @@ const MenuHistory = (props) => {
   };
 
   const onListItemHandler = (menuId) => {
-    // console.log("menuId", menuId);
     // getMenuData(menuId, function (menuData) {
     //   navigation.navigate("Menu", { menuData: menuData });
     // });
